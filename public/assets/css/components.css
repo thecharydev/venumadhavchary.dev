@@ -1,0 +1,306 @@
+/*
+ * components.css
+ * Reusable UI primitives — buttons, tags, callouts, section headers,
+ * spec rows, badges. Any section can import these patterns.
+ */
+
+/* ── Buttons ─────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.76rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  padding: 0.38rem 0.85rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--ease),
+    border-color var(--ease),
+    color var(--ease),
+    box-shadow var(--ease);
+  text-decoration: none;
+  line-height: 1;
+}
+
+.btn--primary {
+  background: var(--crimson);
+  color: #fff;
+  border-color: var(--crimson);
+  box-shadow: 0 1px 4px rgba(240, 23, 71, 0.25);
+}
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: var(--crimson-dark);
+  border-color: var(--crimson-dark);
+  box-shadow: 0 2px 8px rgba(240, 23, 71, 0.35);
+}
+
+.btn--ghost {
+  background: var(--console-hover);
+  color: #fff;
+  border-color: var(--slate-700);
+}
+.btn--ghost:hover { background: #253245; }
+
+.btn--outline {
+  background: transparent;
+  color: var(--slate-300);
+  border-color: var(--slate-700);
+}
+.btn--outline:hover { color: #fff; border-color: var(--slate-500); }
+
+/* ── Tags / badges ───────────────────────────────────── */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.2rem 0.52rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.tag--crimson {
+  background: var(--crimson);
+  color: #fff;
+  border: 1px solid var(--crimson);
+}
+
+.tag--border {
+  background: var(--console-elevated);
+  color: var(--slate-200);
+  border: 1px solid var(--slate-700);
+}
+
+.tag--outline-dark {
+  background: var(--surface-white);
+  color: var(--text-dark);
+  border: 1px solid var(--slate-200);
+}
+
+/* ── Section header ──────────────────────────────────── */
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.section-badge {
+  padding: 0.2rem 0.5rem;
+  background: var(--crimson);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+}
+
+.section-eyebrow-sep  { color: var(--slate-600); }
+.section-eyebrow-sub  {
+  color: var(--slate-400);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.section--light .section-eyebrow-sub { color: var(--slate-500); }
+
+.section-title-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 2px solid var(--crimson);
+}
+
+@media (min-width: 640px) {
+  .section-title-row {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+@media (min-width: 768px) { .section-title { font-size: 1.65rem; } }
+@media (min-width: 1024px) { .section-title { font-size: 1.75rem; } }
+
+.section--light .section-title { color: var(--text-dark); }
+
+.section-desc {
+  font-size: 0.85rem;
+  color: var(--slate-400);
+  margin-top: 0.3rem;
+  line-height: 1.55;
+}
+.section--light .section-desc { color: var(--text-muted); }
+
+.section-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+/* ── Callout banner ──────────────────────────────────── */
+
+.callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--crimson);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-bottom: 1.35rem;
+  font-size: 0.84rem;
+}
+
+.callout--dark {
+  background: var(--console-bar);
+  border-top: 1px solid var(--slate-800);
+  border-right: 1px solid var(--slate-800);
+  border-bottom: 1px solid var(--slate-800);
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.callout--light {
+  background: var(--surface-white);
+  border-top: 1px solid var(--slate-200);
+  border-right: 1px solid var(--slate-200);
+  border-bottom: 1px solid var(--slate-200);
+}
+
+.callout-icon {
+  font-size: 20px;
+  color: var(--crimson);
+  flex-shrink: 0;
+  margin-top: 1px;
+  line-height: 1;
+}
+
+.callout-body {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.55;
+  font-family: var(--font-sans);
+}
+
+.callout-body--light { color: var(--text-muted); }
+
+.callout-strong       { color: #fff; font-weight: 700; }
+.callout-strong--dark { color: var(--text-dark); font-weight: 700; }
+.callout-text         { color: var(--slate-300); margin-left: 0.25rem; }
+
+.callout-pill {
+  flex-shrink: 0;
+  align-self: flex-start;
+  padding: 0.18rem 0.48rem;
+  background: var(--console-hover);
+  border: 1px solid rgba(240, 23, 71, 0.45);
+  color: var(--crimson);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Spec row (key → value table row) ───────────────── */
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.375rem 0.6rem;
+  background: var(--surface-light);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+
+.spec-key   { color: var(--text-muted); }
+.spec-value { font-weight: 700; color: var(--text-dark); text-align: right; }
+.spec-value--crimson { color: var(--crimson); }
+.spec-value--blue    { color: var(--blue); }
+.spec-value--green   { color: var(--green); }
+
+/* ── Tech chip (small language / tool badge) ─────────── */
+
+.chip {
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.2rem 0.48rem;
+  background: var(--console-hover);
+  border: 1px solid var(--slate-700);
+  color: var(--slate-300);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.chip--left-accent {
+  border-left: 2px solid var(--crimson);
+  background: var(--console-elevated);
+  color: var(--slate-200);
+}
+
+/* ── Card shell ──────────────────────────────────────── */
+
+/* Base card that sections build on */
+.card {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.card--dark {
+  background: var(--console-bar);
+  border: 1px solid var(--slate-800);
+}
+.card--dark:hover { border-color: var(--slate-700); }
+
+.card--light {
+  background: var(--surface-white);
+  border: 1px solid var(--slate-200);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.card--crimson-top {
+  border-top: 4px solid var(--crimson);
+}
+
+/* ── Dots (status indicator) ─────────────────────────── */
+
+.dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot--crimson { background: var(--crimson); }
+.dot--yellow  { background: #f59e0b; }
+.dot--green   { background: #10b981; }
+.dot--emerald { background: var(--green-light); }

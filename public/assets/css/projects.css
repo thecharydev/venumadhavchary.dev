@@ -1,0 +1,307 @@
+/*
+ * projects.css
+ * Projects & Portfolio section — dark background, terminal frame,
+ * project cards grid, and services grid.
+ */
+
+#section-projects {
+  border-bottom: 1px solid var(--slate-800);
+}
+
+/* ── Terminal frame (decorative header for project grid) */
+
+.terminal-frame {
+  background: var(--console-deep);
+  border: 2px solid var(--crimson);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  margin-bottom: 0;
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: var(--console-bar);
+  border-bottom: 1px solid var(--slate-800);
+  user-select: none;
+}
+
+.terminal-traffic {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.traffic-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.25);
+  display: inline-block;
+  box-sizing: border-box;
+}
+.traffic-dot--red    { background: #ff5f56; border-color: #e0443e; }
+.traffic-dot--yellow { background: #ffbd2e; border-color: #dea123; }
+.traffic-dot--green  { background: #27c93f; border-color: #1aab29; }
+
+.terminal-window-name {
+  margin-left: 0.5rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.terminal-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--slate-400);
+  font-size: 0.68rem;
+}
+.terminal-status-text { color: var(--green-light); font-weight: 600; }
+
+.terminal-prompt {
+  padding: 0.55rem 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--slate-200);
+  font-size: 0.76rem;
+}
+
+.prompt-prefix { color: var(--crimson); font-weight: 600; }
+.prompt-caret  {
+  display: inline-block;
+  width: 7px; height: 13px;
+  background: var(--crimson);
+  animation: blink 1s infinite;
+  border-radius: 1px;
+}
+
+/* ── Project cards grid ───────────────────────────────── */
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border: 2px solid var(--crimson);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.project-card {
+  background: var(--console-bar);
+  border-right: 1px solid var(--slate-800);
+  border-top: 1px solid var(--slate-800);
+  padding: 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  transition: background var(--ease);
+}
+.project-card:hover   { background: var(--console-elevated); }
+.project-card:last-child { border-right: none; }
+
+/* on mobile, vertical border becomes bottom border */
+@media (max-width: 767px) {
+  .project-card { border-right: none; border-bottom: 1px solid var(--slate-800); }
+  .project-card:last-child { border-bottom: none; }
+}
+
+.project-card--featured {
+  border-top-color: var(--crimson);
+  border-top-width: 2px;
+}
+
+.project-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.project-live {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--green-light);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.project-live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green-light);
+}
+
+.project-badge {
+  padding: 0.15rem 0.45rem;
+  background: rgba(240, 23, 71, 0.12);
+  border: 1px solid rgba(240, 23, 71, 0.35);
+  color: var(--crimson);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+}
+
+.project-index-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.project-index {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--slate-500);
+  font-weight: 600;
+}
+
+.project-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.25;
+}
+
+.project-desc {
+  font-size: 0.78rem;
+  color: var(--slate-400);
+  line-height: 1.6;
+  flex: 1;
+}
+
+/* details list */
+.project-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.55rem 0.7rem;
+  background: var(--console-deep);
+  border: 1px solid var(--slate-800);
+  border-radius: var(--radius-sm);
+}
+
+.project-detail {
+  display: flex;
+  gap: 0.5rem;
+}
+.project-detail-key   { color: var(--slate-500); flex-shrink: 0; }
+.project-detail-val   { color: var(--slate-200); font-weight: 600; }
+.project-detail-val--crimson { color: var(--crimson); }
+.project-detail-val--blue    { color: var(--blue-light); }
+.project-detail-val--green   { color: var(--green-light); }
+
+/* tag row */
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.project-tag {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  padding: 0.15rem 0.42rem;
+  background: var(--console-hover);
+  border: 1px solid var(--slate-700);
+  color: var(--slate-300);
+  border-radius: var(--radius-sm);
+}
+
+/* ── Services grid ────────────────────────────────────── */
+
+.services-section {
+  border-top: 1px solid var(--slate-800);
+  padding-top: 1.5rem;
+}
+
+.services-row-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.services-heading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+}
+@media (min-width: 560px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .services-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.service-card {
+  background: var(--console-bar);
+  border: 1px solid var(--slate-800);
+  border-top: 2px solid var(--crimson);
+  border-radius: var(--radius);
+  padding: 0.875rem 1rem;
+}
+
+.service-num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--crimson);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.service-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.service-text {
+  font-size: 0.76rem;
+  color: var(--slate-400);
+  line-height: 1.55;
+}
+
+@keyframes wipPulse {
+  0%, 100% {
+    opacity: 0.85;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.25);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

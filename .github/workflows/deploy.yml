@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy to Server
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -15,7 +16,11 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
+            set -e
             cd /var/www/venumadhavchary.dev
             git fetch origin main
             git reset --hard origin/main
+            composer install --no-dev --optimize-autoloader --no-interaction
+            sudo systemctl reload php8.2-fpm
             sudo systemctl reload nginx
+            echo "Deployed"

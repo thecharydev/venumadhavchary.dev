@@ -1,0 +1,30 @@
+# Environment variables
+.env
+
+# Logs
+logs/*.log
+!logs/.gitkeep
+
+# Composer
+vendor/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+
+# Unconfirmed portfolio sections and source data
+public/views/sections/projects.php
+public/views/sections/experience.php
+src/data/projects.php
+src/data/experience.php

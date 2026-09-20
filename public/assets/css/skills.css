@@ -1,0 +1,181 @@
+/*
+ * skills.css
+ * Skills & Tech Stack section — dark background, skill cards with
+ * progress bars, metrics grid, and extra tech chip row.
+ */
+
+#section-skills {
+  border-bottom: 1px solid var(--slate-800);
+}
+
+/* ── Skills canvas (dark bordered container) ──────────── */
+
+.skills-canvas {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--console-deep);
+  border: 2px solid var(--crimson);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.5);
+}
+
+@media (min-width: 768px) { .skills-canvas { padding: 1.625rem; } }
+
+/* ── Skill card grid ──────────────────────────────────── */
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+@media (min-width: 560px) { .skills-grid { grid-template-columns: 1fr 1fr; } }
+
+.skill-card {
+  background: var(--console-bar);
+  border: 1px solid var(--slate-800);
+  border-radius: var(--radius);
+  padding: 0.875rem 1rem;
+  transition:
+    background var(--ease),
+    border-color var(--ease);
+}
+.skill-card:hover {
+  background: var(--console-elevated);
+  border-color: var(--slate-700);
+}
+
+.skill-card--primary {
+  border-top: 2px solid var(--crimson);
+}
+
+.skill-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.skill-name {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.skill-pct {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+.skill-pct--crimson { color: var(--crimson); }
+.skill-pct--blue    { color: var(--blue-light); }
+.skill-pct--green   { color: var(--green-light); }
+
+/* progress bar */
+.skill-bar {
+  height: 5px;
+  background: var(--slate-800);
+  border-radius: 2px;
+  margin-bottom: 0.45rem;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--crimson);
+  transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.skill-bar-fill--blue  { background: #3b82f6; }
+.skill-bar-fill--green { background: var(--green); }
+
+.skill-desc {
+  font-size: 0.76rem;
+  color: var(--slate-400);
+  line-height: 1.55;
+  font-family: var(--font-sans);
+}
+
+/* ── Metrics strip ────────────────────────────────────── */
+
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.55rem;
+  border-top: 1px solid var(--slate-800);
+  padding-top: 1rem;
+}
+@media (min-width: 640px) {
+  .metrics-strip { grid-template-columns: repeat(4, 1fr); }
+}
+
+.metric-card {
+  background: var(--console-bar);
+  border: 1px solid var(--slate-700);
+  border-top: 2px solid var(--crimson);
+  border-radius: var(--radius);
+  padding: 0.65rem 0.75rem;
+  font-family: var(--font-mono);
+}
+
+.metric-label {
+  font-size: 0.65rem;
+  color: var(--slate-400);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+}
+
+.metric-value {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
+}
+.metric-value--crimson { color: var(--crimson); }
+.metric-value--blue    { color: var(--blue-light); }
+
+.metric-sub {
+  font-size: 0.66rem;
+  color: var(--slate-500);
+}
+.metric-sub--green { color: var(--green-light); font-weight: 600; }
+
+/* ── Extra tech chip strip ───────────────────────────── */
+
+.tech-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--slate-800);
+}
+
+.tech-strip-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--slate-400);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  margin-right: 0.25rem;
+}
+
+.tech-chip {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.18rem 0.45rem;
+  background: var(--console-elevated);
+  border: 1px solid var(--slate-700);
+  border-left: 2px solid var(--crimson);
+  color: var(--slate-200);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}

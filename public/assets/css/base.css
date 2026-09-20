@@ -1,0 +1,139 @@
+/*
+ * base.css
+ * CSS reset, global typography, scroll behaviour, and utility keyframes.
+ * No component styles here — only foundational rules.
+ */
+
+/* ── Reset ───────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14.5px;
+  line-height: 1.55;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 15.5px;
+  }
+}
+
+@media (min-width: 1440px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--console-dark);
+  color: var(--text-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* ── Semantic elements ───────────────────────────────── */
+
+a    { text-decoration: none; color: inherit; }
+ul, ol { list-style: none; }
+img  { display: block; max-width: 100%; height: auto; }
+button { cursor: pointer; border: none; background: none; font: inherit; }
+
+input, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+/* ── Selection ───────────────────────────────────────── */
+
+::selection {
+  background: var(--crimson);
+  color: #fff;
+}
+
+/* ── Focus ring ──────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--crimson);
+  outline-offset: 2px;
+}
+
+/* ── Scrollbar ───────────────────────────────────────── */
+
+::-webkit-scrollbar            { width: 5px; height: 5px; }
+::-webkit-scrollbar-track      { background: var(--console-dark); }
+::-webkit-scrollbar-thumb      { background: var(--crimson); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover{ background: var(--crimson-dark); }
+
+/* ── Layout shell ────────────────────────────────────── */
+
+.site-main {
+  padding-top: var(--header-height);
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .container { padding: 0 1.5rem; }
+}
+
+@media (min-width: 1200px) {
+  .container { padding: 0 1.75rem; }
+}
+
+/* ── Section base ────────────────────────────────────── */
+
+.section {
+  padding: 2.75rem 0;
+}
+
+@media (min-width: 768px) {
+  .section { padding: 3.5rem 0; }
+}
+
+@media (min-width: 1024px) {
+  .section { padding: 4rem 0; }
+}
+
+.section--dark  { background: var(--console-dark); }
+.section--light { background: var(--surface-light); }
+
+.section[id],
+#section-contact {
+  scroll-margin-top: calc(var(--header-height) + 6px);
+}
+
+/* ── Keyframes ───────────────────────────────────────── */
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}

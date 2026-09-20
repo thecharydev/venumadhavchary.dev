@@ -1,0 +1,504 @@
+/**
+ * Terminal Section Styles
+ * Interactive CLI console - L2 layer
+ */
+
+.terminal-section {
+  position: relative;
+}
+
+.terminal-section .terminal-frame {
+  background: var(--surface-base);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  overflow: hidden;
+  max-width: 100%;
+  transition: max-height 0.3s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+}
+
+/* Terminal Header Bar */
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 1rem;
+  background: var(--surface-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.terminal-traffic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Traffic Light Buttons (MacBook / macOS style) */
+.traffic-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.25);
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: filter 0.12s ease, transform 0.1s ease;
+  box-sizing: border-box;
+}
+
+.traffic-dot:hover {
+  filter: brightness(0.92);
+}
+
+.traffic-dot:active {
+  filter: brightness(0.82);
+  transform: scale(0.92);
+}
+
+.traffic-dot:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Traffic glyphs on hover */
+.traffic-dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  pointer-events: none;
+}
+
+.terminal-traffic:hover .traffic-dot::before,
+.traffic-dot:focus-visible::before {
+  opacity: 1;
+}
+
+.traffic-dot--red {
+  background-color: #ff5f56;
+  border-color: #e0443e;
+}
+.traffic-dot--red::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6'%3E%3Cpath d='M1 1l4 4M5 1L1 5' stroke='%234c0000' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.traffic-dot--yellow {
+  background-color: #ffbd2e;
+  border-color: #dea123;
+}
+.traffic-dot--yellow::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6'%3E%3Cpath d='M0.8 3h4.4' stroke='%23995700' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.traffic-dot--green {
+  background-color: #27c93f;
+  border-color: #1aab29;
+}
+.traffic-dot--green::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6'%3E%3Cpolygon points='3.3,0.5 5.5,0.5 5.5,2.7' fill='%23006500'/%3E%3Cpolygon points='2.7,5.5 0.5,5.5 0.5,3.3' fill='%23006500'/%3E%3C/svg%3E");
+}
+
+.terminal-window-name {
+  margin-left: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.terminal-meta {
+  display: none;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
+
+@media (min-width: 768px) {
+  .terminal-meta {
+    display: flex;
+  }
+}
+
+.terminal-status-text {
+  color: var(--secondary-light);
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+/* Minimized State */
+.terminal-frame--minimized {
+  border-color: var(--border-subtle);
+}
+
+.terminal-frame--minimized .terminal-bar {
+  cursor: pointer;
+  border-bottom: none;
+}
+
+.terminal-frame--minimized .terminal-body {
+  display: none !important;
+}
+
+.terminal-frame--minimized .traffic-dot--yellow::before {
+  content: '';
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6'%3E%3Cpath d='M0.8 3h4.4M3 0.8v4.4' stroke='%23995700' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Closed State */
+.terminal-frame--closed {
+  display: none !important;
+}
+
+.terminal-frame--restoring {
+  animation: terminalRestoreIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.terminal-frame--closing {
+  animation: terminalCloseOut 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Terminal Relaunch Banner */
+.terminal-launcher {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.35rem;
+  background: var(--surface-base);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius);
+  margin-top: var(--space-md);
+  animation: terminalFadeIn 0.3s ease;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.terminal-launcher--closing {
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+  pointer-events: none;
+}
+
+.terminal-launcher-content {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.terminal-launcher-icon {
+  font-size: 26px;
+  color: var(--crimson);
+}
+
+.terminal-launcher-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-launcher-title {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.terminal-launcher-sub {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.terminal-relaunch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  padding: 0.5rem 0.95rem;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, filter 0.15s ease;
+}
+
+.terminal-relaunch-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.terminal-relaunch-btn:active,
+.terminal-relaunch-btn.is-active {
+  transform: scale(0.95);
+}
+
+.terminal-relaunch-icon {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.terminal-relaunch-btn.is-relaunching .terminal-relaunch-icon {
+  transform: rotate(360deg);
+}
+
+/* Fullscreen Mode */
+.terminal-frame--fullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  border-radius: 0 !important;
+  border: none !important;
+  z-index: 999999 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.95) !important;
+  animation: terminalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.terminal-frame--fullscreen .terminal-bar {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.terminal-frame--fullscreen .terminal-body {
+  flex: 1 1 auto !important;
+  max-height: none !important;
+  height: calc(100vh - 46px) !important;
+  padding: 1.5rem 2rem !important;
+  font-size: 14px;
+}
+
+.terminal-frame--fullscreen .traffic-dot--green::before {
+  content: '';
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6'%3E%3Cpolygon points='3.3,0.5 3.3,2.7 5.5,2.7' fill='%23006500'/%3E%3Cpolygon points='0.5,3.3 2.7,3.3 2.7,5.5' fill='%23006500'/%3E%3C/svg%3E");
+}
+
+body.terminal-fullscreen-active {
+  overflow: hidden !important;
+}
+
+/* Terminal Body */
+.terminal-body {
+  padding: 1rem 1.15rem;
+  min-height: 350px;
+  max-height: 520px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+@media (min-width: 1024px) {
+  .terminal-body {
+    font-size: 13.5px;
+    padding: 1.15rem 1.35rem;
+  }
+}
+
+.terminal-welcome {
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.terminal-output {
+  margin-bottom: var(--space-md);
+}
+
+.terminal-line {
+  margin-bottom: var(--space-sm);
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.terminal-dim {
+  opacity: 0.65;
+}
+
+.terminal-prompt {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.terminal-command {
+  color: var(--text-primary);
+  margin-left: var(--space-sm);
+}
+
+.terminal-result {
+  color: var(--text-muted);
+  margin-left: 0;
+  white-space: pre-wrap;
+}
+
+.terminal-error {
+  color: var(--error);
+}
+
+.terminal-success {
+  color: var(--secondary-light);
+}
+
+.terminal-info {
+  color: var(--tertiary-light);
+}
+
+/* Formatted in-terminal cards & representations */
+.terminal-card {
+  margin: 0.4rem 0 0.6rem 0;
+  padding: 0.75rem 0.95rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--primary);
+  border-radius: 4px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.terminal-bar-chart {
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+
+.terminal-link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.terminal-link:hover {
+  color: var(--secondary-light);
+}
+
+/* Terminal Input */
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  transition: opacity 0.3s ease;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  outline: none;
+}
+
+@media (min-width: 1024px) {
+  .terminal-input {
+    font-size: 13.5px;
+  }
+}
+
+.terminal-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.terminal-caret {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  background: var(--primary);
+  animation: blink 1s infinite;
+}
+
+/* Command History */
+.terminal-history {
+  margin-bottom: var(--space-lg);
+}
+
+/* Keyframes */
+@keyframes terminalPop {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes terminalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes terminalRestoreIn {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.975);
+  }
+  60% {
+    box-shadow: 0 0 28px rgba(240, 23, 71, 0.22);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    box-shadow: none;
+  }
+}
+
+@keyframes terminalCloseOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+
+@keyframes terminalGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(220, 38, 38, 0);
+  }
+  40% {
+    box-shadow: 0 0 28px rgba(220, 38, 38, 0.28);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(220, 38, 38, 0);
+  }
+}
+
+.terminal-frame--connecting {
+  animation: terminalGlow 1.6s ease-out;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 767px) {
+  .terminal-body {
+    font-size: 12px;
+    padding: var(--space-sm);
+    min-height: 290px;
+  }
+  .terminal-frame--fullscreen .terminal-body {
+    padding: 1rem !important;
+    font-size: 12.5px;
+  }
+}
