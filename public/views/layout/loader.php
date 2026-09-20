@@ -35,3 +35,68 @@ $siteName = $profile['site_name'] ?? (defined('SITE_NAME') ? SITE_NAME : 'venuma
     </div>
   </div>
 </div>
+
+<!-- Inline Preloader Controller & Bulletproof Failsafe -->
+<script>
+(function() {
+  var preloader = document.getElementById('site-preloader');
+  if (!preloader) return;
+
+  var progressFill = document.getElementById('preloader-progress-fill');
+  var pctText = document.getElementById('preloader-pct');
+  var statusText = document.getElementById('preloader-status-text');
+
+  var dismissed = false;
+  function dismiss() {
+    if (dismissed) return;
+    dismissed = true;
+    if (preloader) {
+      preloader.classList.add('is-loaded');
+      setTimeout(function() {
+        if (preloader && preloader.parentNode) {
+          preloader.parentNode.removeChild(preloader);
+        }
+      }, 550);
+    }
+    // Trigger any entrance animations
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('is-revealed');
+      }
+    });
+  }
+
+  // Animate progress smoothly in 550ms
+  var startTime = Date.now();
+  var duration = 520;
+
+  function tick() {
+    if (dismissed) return;
+    var elapsed = Date.now() - startTime;
+    var progress = Math.min(100, Math.round((elapsed / duration) * 100));
+
+    if (progressFill) progressFill.style.width = progress + '%';
+    if (pctText) pctText.textContent = progress + '%';
+
+    if (progress >= 70 && statusText) {
+      statusText.textContent = 'READY';
+      statusText.style.color = '#34d399';
+    }
+
+    if (progress < 100) {
+      requestAnimationFrame(tick);
+    } else {
+      setTimeout(dismiss, 50);
+    }
+  }
+
+  requestAnimationFrame(tick);
+
+  // Hard failsafe: guaranteed dismiss within 800ms
+  setTimeout(dismiss, 800);
+  window.addEventListener('load', function() {
+    setTimeout(dismiss, 100);
+  });
+})();
+</script>

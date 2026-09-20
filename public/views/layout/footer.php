@@ -39,8 +39,8 @@ $siteIcon = $profile['site_icon'] ?? (defined('SITE_ICON') ? SITE_ICON : 'V');
 </footer>
 
 <!-- Scripts — deferred, dependency order -->
-<script src="assets/js/scroll.js"     defer></script>
-<script src="assets/js/nav.js"        defer></script>
-<script src="assets/js/terminal.js"   defer></script>
-<script src="assets/js/animations.js" defer></script>
-<script src="assets/js/contact.js"    defer></script>
+<script src="<?= asset_url('assets/js/scroll.js') ?>"     defer></script>
+<script src="<?= asset_url('assets/js/nav.js') ?>"        defer></script>
+<script src="<?= asset_url('assets/js/terminal.js') ?>"   defer></script>
+<script src="<?= asset_url('assets/js/animations.js') ?>" defer></script>
+<script src="<?= asset_url('assets/js/contact.js') ?>"    defer></script>

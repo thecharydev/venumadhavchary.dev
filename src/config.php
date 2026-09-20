@@ -57,3 +57,15 @@ if (APP_DEBUG) {
 
 // Timezone
 date_default_timezone_set('Asia/Kolkata'); // IST
+
+/**
+ * Cache-busting asset URL helper
+ */
+if (!function_exists('asset_url')) {
+    function asset_url($path) {
+        $real = __DIR__ . '/../public/' . ltrim($path, '/');
+        $ver = file_exists($real) ? filemtime($real) : '1.0.2';
+        return htmlspecialchars($path . '?v=' . $ver);
+    }
+}
+

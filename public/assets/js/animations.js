@@ -15,7 +15,10 @@
   const statusText = document.getElementById('preloader-status-text');
 
   function initPreloader() {
-    if (!preloader) return;
+    if (!preloader || preloader.classList.contains('is-loaded')) {
+      triggerEntranceAnimations();
+      return;
+    }
 
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

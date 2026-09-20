@@ -31,19 +31,19 @@ $favicon = ltrim(preg_replace('#^/?public/#', '', $rawFavicon), '/');
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet" />
 
   <!-- Stylesheets — load order matters -->
-  <link rel="stylesheet" href="assets/css/variables.css" />
-  <link rel="stylesheet" href="assets/css/base.css" />
-  <link rel="stylesheet" href="assets/css/loader.css" />
-  <link rel="stylesheet" href="assets/css/components.css" />
-  <link rel="stylesheet" href="assets/css/header.css" />
-  <link rel="stylesheet" href="assets/css/projects.css" />
-  <link rel="stylesheet" href="assets/css/experience.css" />
-  <link rel="stylesheet" href="assets/css/terminal.css" />
-  <link rel="stylesheet" href="assets/css/hero.css" />
-  <link rel="stylesheet" href="assets/css/skills.css" />
-  <link rel="stylesheet" href="assets/css/contact.css" />
-  <link rel="stylesheet" href="assets/css/footer.css" />
-  <link rel="stylesheet" href="assets/css/animations.css" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/variables.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/base.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/loader.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/components.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/header.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/projects.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/experience.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/terminal.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/hero.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/skills.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/contact.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/footer.css') ?>" />
+  <link rel="stylesheet" href="<?= asset_url('assets/css/animations.css') ?>" />
 
   <!-- Initial landing behavior -->
   <script>
