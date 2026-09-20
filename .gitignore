@@ -24,7 +24,6 @@ Thumbs.db
 *.bak
 
 # Unconfirmed portfolio sections and source data
-public/views/sections/projects.php
+
 public/views/sections/experience.php
-src/data/projects.php
 src/data/experience.php

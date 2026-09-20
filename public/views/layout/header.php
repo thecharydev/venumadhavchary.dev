@@ -22,9 +22,9 @@ $siteIcon = $profile['site_icon'] ?? (defined('SITE_ICON') ? SITE_ICON : 'V');
 
     <!-- Desktop nav — inverted order matches page layout -->
     <nav class="main-nav" aria-label="Main navigation">
-      <!-- <a href="#section-projects"   class="nav-link"><span class="nav-tag" aria-hidden="true">[L4]</span> Projects</a>
+      <a href="#section-projects"   class="nav-link"><span class="nav-tag" aria-hidden="true">[L4]</span> Projects</a>
       <span class="nav-divider" aria-hidden="true">+</span>
-      <a href="#section-experience" class="nav-link"><span class="nav-tag" aria-hidden="true">[L3]</span> Experience</a>
+      <!-- <a href="#section-experience" class="nav-link"><span class="nav-tag" aria-hidden="true">[L3]</span> Experience</a>
       <span class="nav-divider" aria-hidden="true">+</span> -->
       <a href="#section-terminal"   class="nav-link"><span class="nav-tag" aria-hidden="true">[L2]</span> Terminal</a>
       <span class="nav-divider" aria-hidden="true">+</span>

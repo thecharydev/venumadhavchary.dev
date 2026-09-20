@@ -85,6 +85,10 @@ input, textarea, select {
   padding-top: var(--header-height);
 }
 
+#main-content > .section + .section {
+  margin-top: 1rem;
+}
+
 .container {
   max-width: var(--container);
   margin: 0 auto;
