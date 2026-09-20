@@ -151,12 +151,12 @@ and modern React/NextJS frontends.
     },
 
     whoami: () => {
-      return `<span class="terminal-info">madhav@dev</span> — Full-Stack Web Developer
-Go & PHP Backend | React & NextJS Frontend | PostgreSQL, MySQL, Redis
-Education: B.Tech CSE, Lovely Professional University (2022–2026)
+      return `<span class="terminal-info">guest@dev</span> (visitor session connected to Venu Madhav's server)
+Host: Venu Madhav Chary — Full-Stack Web Developer
+Backend: Go & PHP | Frontend: React & NextJS | DB: PostgreSQL, MySQL, Redis
 Location: Hyderabad, India [IST] | Status: <span class="terminal-success">Open to Work & Opportunities</span>
 
-Run <span class="terminal-info">about</span> for bio & coordinates`;
+Run <span class="terminal-info">about</span> for bio & coordinates, or <span class="terminal-info">projects</span> to view work`;
     },
 
     ls: () => {
@@ -164,7 +164,7 @@ Run <span class="terminal-info">about</span> for bio & coordinates`;
     },
 
     pwd: () => {
-      return '/home/madhav/portfolio';
+      return '/home/guest/portfolio';
     },
 
     cat: (args) => {
@@ -197,8 +197,8 @@ Run <span class="terminal-info">about</span> for bio & coordinates`;
     // Fun easter eggs
     sudo: (args) => {
       if (args.length === 0) {
-        return `[sudo] password for madhav: 
-<span class="terminal-error">Nice try. This is a portfolio, not a real terminal. 😏</span>`;
+        return `[sudo] password for guest: 
+<span class="terminal-error">guest is not in the sudoers file. This incident will be reported. 😏</span>`;
       }
       if (args.join(' ') === 'rm -rf /' || args.join(' ') === 'rm -rf /*') {
         return '<span class="terminal-error">Permission denied. Also, why would you do that?</span>';
@@ -664,7 +664,7 @@ Type <span class="terminal-info">help</span> for available commands.\n`;
   // Execute command
   function executeCommand(input) {
     // Show command in output
-    addOutput(`<span class="terminal-prompt">madhav@dev:~$</span> <span class="terminal-command">${escapeHtml(input)}</span>`);
+    addOutput(`<span class="terminal-prompt">guest@dev:~$</span> <span class="terminal-command">${escapeHtml(input)}</span>`);
 
     // Parse command
     const parts = input.trim().split(/\s+/);

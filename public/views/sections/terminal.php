@@ -52,7 +52,7 @@
           <button type="button" class="traffic-dot traffic-dot--red" id="btn-terminal-close" title="Close terminal" aria-label="Close terminal"></button>
           <button type="button" class="traffic-dot traffic-dot--yellow" id="btn-terminal-minimize" title="Minimize terminal" aria-label="Minimize terminal"></button>
           <button type="button" class="traffic-dot traffic-dot--green" id="btn-terminal-fullscreen" title="Toggle fullscreen" aria-label="Toggle fullscreen"></button>
-          <span class="terminal-window-name">madhav@dev:~/portfolio</span>
+          <span class="terminal-window-name">guest@dev:~/portfolio</span>
         </div>
         <div class="terminal-meta">
           <span>zsh 5.9</span>
@@ -63,7 +63,7 @@
       <div class="terminal-body" id="terminal-body">
         <div id="terminal-output"></div>
         <div class="terminal-input-line">
-          <span class="terminal-prompt">madhav@dev:~$</span>
+          <span class="terminal-prompt">guest@dev:~$</span>
           <input
             type="text"
             id="terminal-input"

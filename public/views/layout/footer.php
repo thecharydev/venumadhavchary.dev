@@ -9,10 +9,10 @@ $siteIcon = $profile['site_icon'] ?? (defined('SITE_ICON') ? SITE_ICON : 'V');
 ?>
 <footer class="site-footer" role="contentinfo">
   <div class="footer-inner">
-    <div class="footer-brand">
+    <a href="/" class="footer-brand footer-brand-link" id="footer-brand-link" aria-label="<?= htmlspecialchars($siteName) ?> — reload">
       <span class="footer-brand-icon" aria-hidden="true"><?= htmlspecialchars($siteIcon) ?></span>
       <?= htmlspecialchars($siteName) ?>
-    </div>
+    </a>
     <p class="footer-copy">
       &copy; <?= date('Y') ?> <?= htmlspecialchars($profile['name']) ?>. Full-Stack Web Developer from India.
     </p>

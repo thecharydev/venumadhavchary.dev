@@ -41,6 +41,15 @@
   font-weight: 700;
   color: #fff;
   font-size: 0.84rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--ease);
+}
+.footer-brand:hover {
+  color: var(--crimson);
+}
+.footer-brand:hover .footer-brand-icon {
+  transform: scale(1.08);
 }
 
 .footer-brand-icon {
@@ -53,6 +62,7 @@
   font-size: 0.82rem;
   font-weight: 700;
   color: #fff;
+  transition: transform var(--ease);
 }
 
 /* Copy */

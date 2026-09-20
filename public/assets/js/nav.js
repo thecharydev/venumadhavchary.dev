@@ -90,4 +90,18 @@
   // Also run after a short delay on load to account for any reflows
   setTimeout(updateActiveLink, 120);
 
+  /* ── Brand click reload ───────────────────────────── */
+
+  const brandLinks = document.querySelectorAll('.brand-link, .footer-brand-link');
+  brandLinks.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      // Clear hash if any, and reload
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname);
+      }
+      window.location.reload();
+    });
+  });
+
 })();

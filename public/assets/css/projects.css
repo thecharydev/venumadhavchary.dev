@@ -66,7 +66,7 @@
 }
 .terminal-status-text { color: var(--green-light); font-weight: 600; }
 
-.terminal-prompt {
+#section-projects .terminal-prompt {
   padding: 0.55rem 0.875rem;
   display: flex;
   align-items: center;

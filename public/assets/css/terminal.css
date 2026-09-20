@@ -329,6 +329,8 @@ body.terminal-fullscreen-active {
 }
 
 .terminal-prompt {
+  display: inline;
+  padding: 0;
   color: var(--primary);
   font-weight: 600;
 }

@@ -33,6 +33,7 @@ $favicon = ltrim(preg_replace('#^/?public/#', '', $rawFavicon), '/');
   <!-- Stylesheets — load order matters -->
   <link rel="stylesheet" href="assets/css/variables.css" />
   <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/loader.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
   <link rel="stylesheet" href="assets/css/header.css" />
   <link rel="stylesheet" href="assets/css/projects.css" />
@@ -42,6 +43,7 @@ $favicon = ltrim(preg_replace('#^/?public/#', '', $rawFavicon), '/');
   <link rel="stylesheet" href="assets/css/skills.css" />
   <link rel="stylesheet" href="assets/css/contact.css" />
   <link rel="stylesheet" href="assets/css/footer.css" />
+  <link rel="stylesheet" href="assets/css/animations.css" />
 
   <!-- Initial landing behavior -->
   <script>

@@ -27,6 +27,7 @@ $projects           = $projectsData['projects'] ?? $projectsData;
 <html lang="en">
 <?php require __DIR__ . '/views/layout/head.php'; ?>
 <body>
+<?php require __DIR__ . '/views/layout/loader.php'; ?>
 
 <?php require __DIR__ . '/views/layout/header.php'; ?>
 

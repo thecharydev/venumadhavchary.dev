@@ -100,7 +100,7 @@
             <span style="font-size:0.68rem;opacity:0.85;">Brewing</span>
           </div>
           <div style="height:3px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" aria-label="Project in progress">
-            <div style="width:72%;height:100%;background:linear-gradient(90deg, var(--crimson), #f59e0b);border-radius:2px;animation:wipPulse 2s ease-in-out infinite;"></div>
+            <div class="shimmer-active" style="width:72%;height:100%;border-radius:2px;"></div>
           </div>
         </div>
         <?php elseif (!empty($project['repo'])): ?>

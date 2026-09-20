@@ -12,7 +12,7 @@ $siteIcon = $profile['site_icon'] ?? (defined('SITE_ICON') ? SITE_ICON : 'V');
 
     <!-- Brand -->
     <div class="brand">
-      <a href="#section-projects" class="brand-link" aria-label="<?= htmlspecialchars($profile['name']) ?> — home">
+      <a href="/" class="brand-link" id="brand-link" aria-label="<?= htmlspecialchars($profile['name']) ?> — reload">
         <span class="brand-icon" aria-hidden="true"><?= htmlspecialchars($siteIcon) ?></span>
         <span class="brand-name"><?= htmlspecialchars($siteName) ?></span>
         <span class="brand-sep" aria-hidden="true">//</span>
