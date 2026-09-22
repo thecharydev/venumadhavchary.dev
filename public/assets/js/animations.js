@@ -1,6 +1,6 @@
 /**
  * animations.js
- * Comprehensive bidirectional scroll reveals, synchronized preloader pacing,
+ * Bulletproof bidirectional scroll reveals, synchronized preloader pacing,
  * landing entrance orchestration, and tactile micro-interactions.
  */
 
@@ -14,107 +14,104 @@
   let currentScrollDir = 'up';
   document.documentElement.setAttribute('data-scroll-dir', currentScrollDir);
 
-  function checkApexReveals() {
-    // When near the top of the page (Apex: Projects section), ensure all elements are revealed
-    if (window.scrollY <= 140) {
-      document.querySelectorAll('#section-projects .reveal').forEach(function (el) {
-        if (!el.classList.contains('is-revealed')) {
-          el.setAttribute('data-reveal-dir', 'up');
-          el.classList.add('is-revealed');
-        }
-      });
-    }
-  }
-
   function updateScrollDirection() {
     const currentY = window.scrollY;
     const diff = currentY - lastScrollY;
-    // Hysteresis threshold to ignore minor micro-jitters
     if (Math.abs(diff) > 4) {
-      const newDir = diff > 0 ? 'down' : 'up';
-      if (newDir !== currentScrollDir) {
-        currentScrollDir = newDir;
-        document.documentElement.setAttribute('data-scroll-dir', newDir);
-      }
+      currentScrollDir = diff > 0 ? 'down' : 'up';
+      document.documentElement.setAttribute('data-scroll-dir', currentScrollDir);
       lastScrollY = currentY;
     }
-    checkApexReveals();
   }
 
-  window.addEventListener('scroll', updateScrollDirection, { passive: true });
+  /* ── 2. Robust Bidirectional Reveal & Re-Animation System ─ */
 
-  /* ── 2. Bidirectional Staggered Scroll Reveal System ─── */
+  let revealElements = [];
+  let isTicking = false;
 
-  let scrollObserver = null;
+  function evaluateReveals() {
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const scrollY = window.scrollY;
+
+    // Top threshold: 50px (just below fixed header)
+    // Bottom threshold: vh - 30px
+    const revealTopLimit = 50;
+    const revealBottomLimit = vh - 30;
+
+    // Generous hysteresis reset buffer:
+    // Elements only reset when they are at least 80px COMPLETELY OUTSIDE the viewport window.
+    // If you stop scrolling in the middle of a section, elements stay revealed with zero jumping!
+    const resetTopLimit = -80;
+    const resetBottomLimit = vh + 80;
+
+    revealElements.forEach(function (el) {
+      const rect = el.getBoundingClientRect();
+
+      // Top of page guarantee: ensure apex projects section is always revealed
+      if (scrollY <= 140 && el.closest('#section-projects')) {
+        if (!el.classList.contains('is-revealed')) {
+          el.classList.remove('reveal--from-bottom');
+          el.classList.add('reveal--from-top', 'is-revealed');
+        }
+        return;
+      }
+
+      const isInRevealZone = (rect.top < revealBottomLimit && rect.bottom > revealTopLimit);
+
+      if (isInRevealZone) {
+        if (!el.classList.contains('is-revealed')) {
+          // Lock in directional vector matching current scroll motion
+          if (currentScrollDir === 'up') {
+            el.classList.remove('reveal--from-bottom');
+            el.classList.add('reveal--from-top');
+          } else {
+            el.classList.remove('reveal--from-top');
+            el.classList.add('reveal--from-bottom');
+          }
+
+          el.classList.add('is-revealed');
+
+          // Trigger counter roll
+          const counters = el.querySelectorAll('[data-counter]');
+          counters.forEach(animateCounter);
+        }
+      } else {
+        // ONLY reset when the element is 100% completely outside the visible screen
+        const isCompletelyOffscreen = (rect.bottom < resetTopLimit || rect.top > resetBottomLimit);
+
+        if (isCompletelyOffscreen && el.classList.contains('is-revealed')) {
+          // Do not reset top items if user is at apex
+          if (scrollY <= 140 && el.closest('#section-projects')) return;
+
+          el.classList.remove('is-revealed', 'reveal--from-top', 'reveal--from-bottom');
+
+          const counters = el.querySelectorAll('[data-counter]');
+          counters.forEach(function (c) {
+            if (c._counterAnimId) {
+              cancelAnimationFrame(c._counterAnimId);
+              c._counterAnimId = null;
+            }
+            c.textContent = '0';
+          });
+        }
+      }
+    });
+
+    isTicking = false;
+  }
+
+  function onScrollOrResize() {
+    updateScrollDirection();
+    if (!isTicking) {
+      isTicking = true;
+      requestAnimationFrame(evaluateReveals);
+    }
+  }
+
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize, { passive: true });
 
   function setupScrollReveals() {
-    if (!('IntersectionObserver' in window)) {
-      // Fallback: reveal everything immediately
-      document.querySelectorAll('.reveal').forEach(function (el) {
-        el.classList.add('is-revealed');
-      });
-      return;
-    }
-
-    scrollObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            // Horizontal grid column stagger
-            const parent = entry.target.parentElement;
-            if (parent && (parent.classList.contains('projects-grid') || parent.classList.contains('specs-rows') || parent.classList.contains('bio-socials-grid'))) {
-              const siblings = Array.from(parent.children);
-              const idx = siblings.indexOf(entry.target);
-              const total = siblings.length;
-              if (idx !== -1 && total > 1) {
-                if (currentScrollDir === 'up') {
-                  // Scrolling UP: bottom-most items enter first with 0s delay, higher items cascade after
-                  const revIdx = (total - 1 - idx) % 4;
-                  entry.target.style.transitionDelay = (revIdx * 0.07) + 's';
-                } else {
-                  // Scrolling DOWN: top-most items enter first
-                  const normIdx = idx % 4;
-                  entry.target.style.transitionDelay = (normIdx * 0.07) + 's';
-                }
-              }
-            } else {
-              // Vertical items and standalone cards trigger immediately without delay
-              entry.target.style.transitionDelay = '0s';
-            }
-
-            // Lock in active direction at the exact moment of viewport entrance
-            entry.target.setAttribute('data-reveal-dir', currentScrollDir);
-            entry.target.classList.add('is-revealed');
-
-            // Trigger animated number counters if present
-            const counters = entry.target.querySelectorAll('[data-counter]');
-            counters.forEach(animateCounter);
-          } else {
-            // Un-reveal off-screen so element re-triggers smoothly on reverse scroll
-            // (Unless at the top of the page where apex items should remain visible)
-            if (window.scrollY > 140 || !entry.target.closest('#section-projects')) {
-              entry.target.classList.remove('is-revealed');
-              entry.target.removeAttribute('data-reveal-dir');
-            }
-
-            const counters = entry.target.querySelectorAll('[data-counter]');
-            counters.forEach(function (c) {
-              if (c._counterAnimId) {
-                cancelAnimationFrame(c._counterAnimId);
-                c._counterAnimId = null;
-              }
-              c.textContent = '0';
-            });
-          }
-        });
-      },
-      {
-        threshold: 0.06,
-        // -55px top margin clears the 56px fixed header without delaying reveals on mobile
-        rootMargin: '-55px 0px -40px 0px'
-      }
-    );
-
     // Single elements across sections
     const singleSelectors = [
       '.section-header',
@@ -131,48 +128,57 @@
     singleSelectors.forEach(function (selector) {
       document.querySelectorAll(selector).forEach(function (el) {
         el.classList.add('reveal');
-        scrollObserver.observe(el);
+        revealElements.push(el);
       });
     });
 
-    // Multi-item grid containers with staggered delays
+    // Multi-item grid containers
     const gridContainers = [
-      { selector: '.projects-grid', children: '.project-card', maxStagger: 6 },
-      { selector: '.services-grid', children: '.service-card', maxStagger: 4 },
-      { selector: '.bio-socials-grid', children: '.social-card', maxStagger: 4 },
-      { selector: '.specs-rows', children: '.spec-row', maxStagger: 6 },
-      { selector: '.timeline', children: '.timeline-entry, .timeline-bridge', maxStagger: 8 }
+      { selector: '.projects-grid', children: '.project-card' },
+      { selector: '.services-grid', children: '.service-card' },
+      { selector: '.bio-socials-grid', children: '.social-card' },
+      { selector: '.specs-rows', children: '.spec-row' },
+      { selector: '.timeline', children: '.timeline-entry, .timeline-bridge' }
     ];
 
     gridContainers.forEach(function (group) {
       document.querySelectorAll(group.selector).forEach(function (container) {
         const items = container.querySelectorAll(group.children);
-        items.forEach(function (item) {
+        items.forEach(function (item, index) {
           item.classList.add('reveal');
-          scrollObserver.observe(item);
+          // Horizontal sibling cascade
+          if (group.selector !== '.timeline') {
+            item.style.transitionDelay = ((index % 4) * 0.08) + 's';
+          }
+          revealElements.push(item);
         });
       });
     });
+
+    // Deduplicate elements
+    revealElements = Array.from(new Set(revealElements));
+
+    // Initial evaluation
+    evaluateReveals();
   }
 
   /* ── 3. Landing Entrance Orchestration ───────────────── */
 
   function triggerEntranceAnimations() {
-    // Only run when preloader is cleared or already dismissed
-    const visibleReveals = Array.from(document.querySelectorAll('.reveal')).filter(function (el) {
+    // Stagger visible landing view elements in an upward-building sequence
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const visibleReveals = revealElements.filter(function (el) {
       const rect = el.getBoundingClientRect();
-      return rect.top < window.innerHeight && rect.bottom > 0;
+      return rect.top < vh && rect.bottom > 0;
     });
 
-    // Stagger the initial landing view elements in an upward-building sequence
     visibleReveals.forEach(function (el, i) {
       setTimeout(function () {
-        el.setAttribute('data-reveal-dir', 'up');
-        el.classList.add('is-revealed');
+        el.classList.add('reveal--from-top', 'is-revealed');
 
         const counters = el.querySelectorAll('[data-counter]');
         counters.forEach(animateCounter);
-      }, i * 95);
+      }, i * 90);
     });
   }
 
@@ -194,7 +200,7 @@
       cancelAnimationFrame(el._counterAnimId);
     }
 
-    const duration = 950; // ms — tuned to 0.95s reveal
+    const duration = 900; // ms — smooth counter roll
     const startTime = performance.now();
 
     function update(now) {

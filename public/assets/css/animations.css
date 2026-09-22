@@ -27,29 +27,20 @@
   opacity: 0;
   will-change: opacity, transform;
   transition-property: opacity, transform;
-  transition-duration: 0.95s;
+  transition-duration: 0.88s;
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Default state: Inverted layout starts at bottom, so primary motion is entering from above */
-.reveal {
-  transform: translateY(-30px) scale(0.98);
-}
-
-/* Bottom-to-Top (Ascending Flow):
-   When scrolling UP towards Terminal, Experience, Projects,
-   elements enter from top of viewport and glide downward into place smoothly. */
-html[data-scroll-dir="up"] .reveal,
-.reveal[data-reveal-dir="up"] {
-  transform: translateY(-30px) scale(0.98);
+/* Default initial un-revealed state */
+.reveal,
+.reveal--from-top:not(.is-revealed) {
+  transform: translateY(-28px) scale(0.98);
 }
 
 /* Top-to-Bottom (Descending Flow):
-   When scrolling DOWN towards About/Contact,
-   elements enter from bottom of viewport and glide upward into place smoothly. */
-html[data-scroll-dir="down"] .reveal,
-.reveal[data-reveal-dir="down"] {
-  transform: translateY(30px) scale(0.98);
+   When scrolling DOWN, incoming elements glide upward into place */
+.reveal--from-bottom:not(.is-revealed) {
+  transform: translateY(28px) scale(0.98);
 }
 
 /* Specific variants */
