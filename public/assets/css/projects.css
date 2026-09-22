@@ -187,6 +187,34 @@
   flex: 1;
 }
 
+.project-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+  flex: 1;
+}
+
+.project-highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  font-size: 0.77rem;
+  color: var(--slate-300);
+  line-height: 1.45;
+}
+
+.project-bullet {
+  color: var(--crimson);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  line-height: 1.25;
+  flex-shrink: 0;
+}
+
 /* details list */
 .project-details {
   display: flex;

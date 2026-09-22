@@ -37,13 +37,13 @@
     about: "Full-Stack Web Developer from Hyderabad, India. B.Tech in CSE at Lovely Professional University. Specialising in Go, PHP (Laravel, Echo), PostgreSQL, MySQL, Redis, React, and NextJS.",
     skills: "Go (88%), PHP / Laravel (90%), PostgreSQL & MySQL (86%), React & NextJS (82%), Redis, Docker",
     projects: [
-      "Tasker - Full-Stack Monorepo in Go, React/TS, Postgres, Redis, S3 (Active)",
       "GarageMitra - Automobile Garage Management SaaS in Laravel, MySQL, NextJS (Active)",
+      "Tasker - Full-Stack Monorepo in Go, React/TS, Postgres, Redis, S3 (Active)",
       "Cooking Next Big Thing - Converting Coffee to Code ☕ (Distributed Go & Redis Microservices)"
     ],
     experience: [
+      "Full-Stack Developer — GarageMitra (2025)",
       "Full-Stack Developer — Tasker (2025–2026)",
-      "Full-Stack Developer — GarageMitra (2025–2026)",
       "Freelance Web Developer (2023–Present)"
     ],
     contact: "Email: thecharydev@gmail.com | GitHub: @thecharydev | LinkedIn: in/venumadhavchary | Location: Hyderabad, India [IST]"

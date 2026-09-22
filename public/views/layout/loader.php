@@ -56,20 +56,19 @@ $siteName = $profile['site_name'] ?? (defined('SITE_NAME') ? SITE_NAME : 'venuma
         if (preloader && preloader.parentNode) {
           preloader.parentNode.removeChild(preloader);
         }
-      }, 550);
+      }, 700);
     }
-    // Trigger any entrance animations
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      var rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        el.classList.add('is-revealed');
-      }
-    });
+    // Signal that preloader is cleared so entrance animations can cascade
+    window.__preloaderDismissed = true;
+    window.dispatchEvent(new CustomEvent('preloader-cleared'));
+    if (typeof window.triggerEntranceAnimations === 'function') {
+      window.triggerEntranceAnimations();
+    }
   }
 
-  // Animate progress smoothly in 550ms
+  // Animate progress smoothly over 1700ms (~1.7 seconds)
   var startTime = Date.now();
-  var duration = 520;
+  var duration = 1700;
 
   function tick() {
     if (dismissed) return;
@@ -79,7 +78,7 @@ $siteName = $profile['site_name'] ?? (defined('SITE_NAME') ? SITE_NAME : 'venuma
     if (progressFill) progressFill.style.width = progress + '%';
     if (pctText) pctText.textContent = progress + '%';
 
-    if (progress >= 70 && statusText) {
+    if (progress >= 85 && statusText) {
       statusText.textContent = 'READY';
       statusText.style.color = '#34d399';
     }
@@ -87,16 +86,19 @@ $siteName = $profile['site_name'] ?? (defined('SITE_NAME') ? SITE_NAME : 'venuma
     if (progress < 100) {
       requestAnimationFrame(tick);
     } else {
-      setTimeout(dismiss, 50);
+      setTimeout(dismiss, 160);
     }
   }
 
   requestAnimationFrame(tick);
 
-  // Hard failsafe: guaranteed dismiss within 800ms
-  setTimeout(dismiss, 800);
+  // Hard failsafe: guaranteed dismiss within 3200ms
+  setTimeout(dismiss, 3200);
   window.addEventListener('load', function() {
-    setTimeout(dismiss, 100);
+    // If page took longer to load, dismiss smoothly after 200ms
+    if (Date.now() - startTime >= duration) {
+      setTimeout(dismiss, 160);
+    }
   });
 })();
 </script>

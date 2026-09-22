@@ -6,7 +6,11 @@
 function logRequest() {
     $logFile = __DIR__ . '/../logs/access.log';
     $timestamp = date('Y-m-d H:i:s');
-    $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    // If multiple IPs in forwarded header, pick the first
+    if (strpos($ip, ',') !== false) {
+        $ip = trim(explode(',', $ip)[0]);
+    }
     $method = $_SERVER['REQUEST_METHOD'] ?? 'unknown';
     $uri = $_SERVER['REQUEST_URI'] ?? 'unknown';
     $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';

@@ -21,42 +21,63 @@
   background-size: 24px 24px;
 }
 
-/* ── Scroll Reveal System ────────────────────────────── */
+/* ── Bidirectional Scroll Reveal System ──────────────── */
 
 .reveal {
   opacity: 0;
   will-change: opacity, transform;
   transition-property: opacity, transform;
-  transition-duration: 0.55s;
+  transition-duration: 0.95s;
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.reveal--fade-up {
-  transform: translateY(24px);
+/* Default state: Inverted layout starts at bottom, so primary motion is entering from above */
+.reveal {
+  transform: translateY(-30px) scale(0.98);
 }
 
+/* Bottom-to-Top (Ascending Flow):
+   When scrolling UP towards Terminal, Experience, Projects,
+   elements enter from top of viewport and glide downward into place smoothly. */
+html[data-scroll-dir="up"] .reveal,
+.reveal[data-reveal-dir="up"] {
+  transform: translateY(-30px) scale(0.98);
+}
+
+/* Top-to-Bottom (Descending Flow):
+   When scrolling DOWN towards About/Contact,
+   elements enter from bottom of viewport and glide upward into place smoothly. */
+html[data-scroll-dir="down"] .reveal,
+.reveal[data-reveal-dir="down"] {
+  transform: translateY(30px) scale(0.98);
+}
+
+/* Specific variants */
 .reveal--fade-in {
-  transform: scale(0.96);
+  transform: scale(0.95) !important;
 }
 
 .reveal--slide-right {
-  transform: translateX(-20px);
+  transform: translateX(-24px) !important;
 }
 
+/* Fully revealed state */
 .reveal.is-revealed {
-  opacity: 1;
-  transform: translate(0) scale(1);
+  opacity: 1 !important;
+  transform: translate(0, 0) scale(1) !important;
 }
 
-/* Stagger delay classes (up to 10 items) */
-.delay-1 { transition-delay: 0.06s; }
-.delay-2 { transition-delay: 0.12s; }
-.delay-3 { transition-delay: 0.18s; }
-.delay-4 { transition-delay: 0.24s; }
-.delay-5 { transition-delay: 0.30s; }
-.delay-6 { transition-delay: 0.36s; }
-.delay-7 { transition-delay: 0.42s; }
-.delay-8 { transition-delay: 0.48s; }
+/* Distinct Stagger delay classes (80ms increments for visible cascading wave) */
+.delay-1  { transition-delay: 0.08s; }
+.delay-2  { transition-delay: 0.16s; }
+.delay-3  { transition-delay: 0.24s; }
+.delay-4  { transition-delay: 0.32s; }
+.delay-5  { transition-delay: 0.40s; }
+.delay-6  { transition-delay: 0.48s; }
+.delay-7  { transition-delay: 0.56s; }
+.delay-8  { transition-delay: 0.64s; }
+.delay-9  { transition-delay: 0.72s; }
+.delay-10 { transition-delay: 0.80s; }
 
 /* ── Section Title Underline Animation ───────────────── */
 
@@ -75,7 +96,7 @@
   background: linear-gradient(90deg, var(--crimson) 0%, rgba(240, 23, 71, 0.8) 70%, transparent 100%);
   transform-origin: left;
   transform: scaleX(0);
-  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+  transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.18s;
 }
 
 .section-header.is-revealed .section-title-row::after {

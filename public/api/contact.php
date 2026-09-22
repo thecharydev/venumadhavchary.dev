@@ -67,7 +67,8 @@ if (strlen($message) > 5000) {
 }
 
 // Get client IP
-$clientIp = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$rawIp = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$clientIp = (strpos($rawIp, ',') !== false) ? trim(explode(',', $rawIp)[0]) : $rawIp;
 
 // Rate limiting check
 if (!checkRateLimit($clientIp)) {

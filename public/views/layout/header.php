@@ -14,9 +14,7 @@ $siteIcon = $profile['site_icon'] ?? (defined('SITE_ICON') ? SITE_ICON : 'V');
     <div class="brand">
       <a href="/" class="brand-link" id="brand-link" aria-label="<?= htmlspecialchars($profile['name']) ?> — reload">
         <span class="brand-icon" aria-hidden="true"><?= htmlspecialchars($siteIcon) ?></span>
-        <span class="brand-name"><?= htmlspecialchars($siteName) ?></span>
-        <span class="brand-sep" aria-hidden="true">//</span>
-        <span class="brand-tagline"><?= htmlspecialchars($profile['title']) ?></span>
+        <span class="brand-name"><?= htmlspecialchars($siteName) ?>  </span>
       </a>
     </div>
 
@@ -24,8 +22,8 @@ $siteIcon = $profile['site_icon'] ?? (defined('SITE_ICON') ? SITE_ICON : 'V');
     <nav class="main-nav" aria-label="Main navigation">
       <a href="#section-projects"   class="nav-link"><span class="nav-tag" aria-hidden="true">[L4]</span> Projects</a>
       <span class="nav-divider" aria-hidden="true">+</span>
-      <!-- <a href="#section-experience" class="nav-link"><span class="nav-tag" aria-hidden="true">[L3]</span> Experience</a>
-      <span class="nav-divider" aria-hidden="true">+</span> -->
+      <a href="#section-experience" class="nav-link"><span class="nav-tag" aria-hidden="true">[L3]</span> Journey</a>
+      <span class="nav-divider" aria-hidden="true">+</span>
       <a href="#section-terminal"   class="nav-link"><span class="nav-tag" aria-hidden="true">[L2]</span> Terminal</a>
       <span class="nav-divider" aria-hidden="true">+</span>
       <a href="#section-about"      class="nav-link"><span class="nav-tag" aria-hidden="true">[L1]</span> About</a>
@@ -80,8 +78,8 @@ $siteIcon = $profile['site_icon'] ?? (defined('SITE_ICON') ? SITE_ICON : 'V');
 
 <!-- Mobile navigation drawer -->
 <nav class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation" aria-hidden="true">
-  <!-- <a href="#section-projects"   class="mobile-drawer-link" onclick="closeMobileDrawer()"><span class="mobile-drawer-tag">[L4]</span> Projects</a>
-  <a href="#section-experience" class="mobile-drawer-link" onclick="closeMobileDrawer()"><span class="mobile-drawer-tag">[L3]</span> Experience</a> -->
+  <a href="#section-projects"   class="mobile-drawer-link" onclick="closeMobileDrawer()"><span class="mobile-drawer-tag">[L4]</span> Projects</a>
+  <a href="#section-experience" class="mobile-drawer-link" onclick="closeMobileDrawer()"><span class="mobile-drawer-tag">[L3]</span> Journey</a>
   <a href="#section-terminal"   class="mobile-drawer-link" onclick="closeMobileDrawer()"><span class="mobile-drawer-tag">[L2]</span> Terminal</a>
   <a href="#section-about"      class="mobile-drawer-link" onclick="closeMobileDrawer()"><span class="mobile-drawer-tag">[L1]</span> About Me</a>
   <a href="#section-contact"    class="mobile-drawer-link" onclick="closeMobileDrawer()"><span class="mobile-drawer-tag">[+]</span> Contact</a>

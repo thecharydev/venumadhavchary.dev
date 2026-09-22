@@ -68,7 +68,18 @@
           <span class="project-index">[<?= htmlspecialchars($project['id'] ?? 'P-' . str_pad($index + 1, 2, '0', STR_PAD_LEFT)) ?>]</span>
           <h3 class="project-name"><?= htmlspecialchars($project['name'] ?? '') ?></h3>
         </div>
-        <p class="project-desc"><?= htmlspecialchars($project['description'] ?? '') ?></p>
+        <?php if (!empty($project['highlights'])): ?>
+        <ul class="project-highlights">
+          <?php foreach ($project['highlights'] as $highlight): ?>
+          <li class="project-highlight-item">
+            <span class="project-bullet" aria-hidden="true">&rsaquo;</span>
+            <span><?= htmlspecialchars($highlight) ?></span>
+          </li>
+          <?php endforeach; ?>
+        </ul>
+        <?php elseif (!empty($project['description'])): ?>
+        <p class="project-desc"><?= htmlspecialchars($project['description']) ?></p>
+        <?php endif; ?>
         <div class="project-details">
           <div class="project-detail">
             <span class="project-detail-key">TYPE:</span>
@@ -90,24 +101,11 @@
           <?php endforeach; ?>
         </div>
         <?php endif; ?>
-        <?php if (!empty($project['is_wip'])): ?>
-        <div class="project-links" style="margin-top:0.65rem;padding-top:0.55rem;border-top:1px solid var(--border-subtle, #1e293b);display:flex;flex-direction:column;gap:0.4rem;">
-          <div style="display:flex;align-items:center;justify-content:space-between;font-family:var(--font-mono);font-size:0.72rem;color:var(--amber, #f59e0b);">
-            <span style="display:inline-flex;align-items:center;gap:0.35rem;font-weight:600;">
-              <span class="material-symbols-outlined" style="font-size:14px;animation:spin 3s linear infinite;" aria-hidden="true">sync</span>
-              Cooking... Coffee &rarr; Code
-            </span>
-            <span style="font-size:0.68rem;opacity:0.85;">Brewing</span>
-          </div>
-          <div style="height:3px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" aria-label="Project in progress">
-            <div class="shimmer-active" style="width:72%;height:100%;border-radius:2px;"></div>
-          </div>
-        </div>
-        <?php elseif (!empty($project['repo'])): ?>
+        <?php if (!empty($project['repo'])): ?>
         <div class="project-links" style="margin-top:0.65rem;padding-top:0.5rem;border-top:1px solid var(--border-subtle, #1e293b);display:flex;align-items:center;">
           <a href="<?= htmlspecialchars($project['repo']) ?>" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:0.72rem;color:var(--crimson);display:inline-flex;align-items:center;gap:0.35rem;text-decoration:none;font-weight:600;">
             <svg style="width:13px;height:13px;fill:currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-            GitHub Repository &rarr;
+            <?= !empty($project['is_wip']) ? 'GitHub Profile &rarr;' : 'GitHub Repository &rarr;' ?>
           </a>
         </div>
         <?php endif; ?>
