@@ -34,6 +34,10 @@ $projects           = $projectsData['projects'] ?? $projectsData;
 <html lang="en">
 <?php require __DIR__ . '/views/layout/head.php'; ?>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MDKS49MN"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <?php require __DIR__ . '/views/layout/loader.php'; ?>
 
 <?php require __DIR__ . '/views/layout/header.php'; ?>
