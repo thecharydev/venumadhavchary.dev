@@ -1,4 +1,4 @@
-# Madhav's Portfolio - Full-Stack Web Developer
+# Venu Madhav's Portfolio - Full-Stack Web Developer
 
 Modern, industrial-aesthetic portfolio built with PHP and the Stitch "Kernel & Monolith" design system.
 
@@ -170,9 +170,9 @@ Personal portfolio - All rights reserved.
 
 ## 👤 Author
 
-**Madhav** (Venu Madhav Chary)
+**Venu Madhav** 
 - Email: thecharydev@gmail.com
-- GitHub: [@venumadhavchary](https://github.com/venumadhavchary)
+- GitHub: [@thecharydev](https://github.com/thecharydev)
 - Portfolio: https://venumadhavchary.dev
 
 ---
