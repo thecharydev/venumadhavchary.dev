@@ -29,12 +29,12 @@
 
     // Basic validation
     if (!emailVal.trim() || !messageVal.trim()) {
-      show(errorEl, 'Please fill in both fields before sending.');
+      show(errorEl, 'Transmission paused. Both fields are required before sending.');
       return;
     }
 
     if (!isValidEmail(emailVal.trim())) {
-      show(errorEl, 'Please enter a valid email address.');
+      show(errorEl, 'That address failed validation. Check the syntax and try again.');
       return;
     }
 
@@ -47,8 +47,8 @@
         form.reset();
         setTimeout(function () { hide(successEl); }, 6000);
       })
-      .catch(function () {
-        show(errorEl, 'Something went wrong. Please email me directly at thecharydev@gmail.com');
+      .catch(function (error) {
+        show(errorEl, getErrorMessage(error));
       })
       .finally(function () {
         setLoading(false);
@@ -78,6 +78,32 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
   }
 
+  function getErrorMessage(error) {
+    var message = error && error.message ? error.message : '';
+
+    if (message === 'Message must be at least 10 characters') {
+      return 'Signal too short. Add a little more detail so the message can get through.';
+    }
+
+    if (message === 'Message too long (max 5000 characters)') {
+      return 'Payload rejected: that message is over 5,000 characters. Trim the signal and try again.';
+    }
+
+    if (message === 'Too many requests. Please try again in an hour.') {
+      return 'Rate limit reached. The inbox needs a cooldown — try again in an hour.';
+    }
+
+    if (message === 'Invalid email address') {
+      return 'That address failed validation. Check the syntax and try again.';
+    }
+
+    if (message === 'Invalid JSON input' || message === 'Method not allowed') {
+      return 'Request rejected. Please refresh the page and try again.';
+    }
+
+    return 'Transmission failed. Please email me directly at thecharydev@gmail.com';
+  }
+
   /**
    * Submits contact form to the PHP backend API
    */
@@ -88,12 +114,21 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email, message: message })
     }).then(function(response) {
-      if (!response.ok) {
-        return response.json().then(function(data) {
+      return response.text().then(function(body) {
+        var data;
+
+        try {
+          data = JSON.parse(body);
+        } catch (parseError) {
+          throw new Error('Unexpected server response');
+        }
+
+        if (!response.ok || !data.success) {
           throw new Error(data.message || 'Failed to send message');
-        });
-      }
-      return response.json();
+        }
+
+        return data;
+      });
     });
   }
 
