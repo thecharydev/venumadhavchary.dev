@@ -20,6 +20,12 @@ jobs:
             cd /var/www/venumadhavchary.dev
             git fetch origin main
             git reset --hard origin/main
+            php_version="$(php -r 'echo PHP_VERSION;')"
+            php_fpm_version="$(php-fpm8.2 -v | awk 'NR == 1 {print $2}')"
+            if ! php -r 'exit(version_compare($argv[1], "8.2.35", ">=") && version_compare($argv[2], "8.2.35", ">=") ? 0 : 1);' "$php_version" "$php_fpm_version"; then
+              echo "PHP 8.2.35 or newer is required for CLI and FPM; found CLI $php_version and FPM $php_fpm_version" >&2
+              exit 1
+            fi
             composer install --no-dev --optimize-autoloader --no-interaction
             sudo chown -R :www-data logs
             sudo chmod -R 775 logs
